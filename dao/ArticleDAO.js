@@ -1,12 +1,13 @@
 import mysql from "mysql";
 
-class ArticleDAO{
+export class ArticleDAO{
 
     #connect(){
         const con = mysql.createConnection({
             host: "localhost",
-            user: "root",
-            password: "qsdfjklm"
+            user: "mglsi_user",
+            password: "passer",
+            database: "mglsi_news"
         });
 
         con.connect(function(err) {
@@ -17,13 +18,22 @@ class ArticleDAO{
         return con;
     }
 
+    /*//object to xml
+    static toXML(result){
+
+    }*/
+
+    //returns a promise of the result
     getAllArticles(){
         const con = this.#connect();
-        const sql = "select * from Article.js";
+        const sql = "select * from Article";
 
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            //faire traitement avec result
+        return new Promise((resolve) => {
+            con.query(sql, (err, result) => {
+                if (err) throw err;
+                console.log(result);
+                resolve(result);
+            });
         });
     }
 }
