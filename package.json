@@ -12,5 +12,9 @@
     "url": "polytechNews_REST_Web_Service"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mysql": "^2.18.1"
+  }
 }
