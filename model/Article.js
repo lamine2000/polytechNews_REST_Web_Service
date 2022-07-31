@@ -1,3 +1,3 @@
-class Article{
+export class Article{
 
 }
