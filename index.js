@@ -1,12 +1,25 @@
-const mysql = require('mysql');
-const express = require('express');
+import {ArticleDAO} from "./dao/ArticleDAO.js"
+
+import express from 'express';
 
 const app = express();
 const port = 3000;
 
-
 app.get('/', (req, res) => {
     //behaviour to define
+    const dao = new ArticleDAO();
+
+    dao.getAllArticles()
+        .then(result => {
+        res.send({code: 200, 'articles': result});
+    });
+
+    /*res.send(
+        {
+            result,
+            code: 200
+        });*/
+
 });
 
 app.get('/getAllArticles/xml', (req, res) => {
@@ -14,15 +27,29 @@ app.get('/getAllArticles/xml', (req, res) => {
 });
 
 app.get('/getAllArticles/json', (req, res) => {
-    //retrieve then send back all articles in an xml format
+    //retrieve then send back all articles in a json format
+    const dao = new ArticleDAO();
+
+    dao.getAllArticles()
+        .then(result => {
+            res.send({code: 200, 'articles': result});
+        });
 });
 
-app.get('/getAllArticlesGroupedByCategories/xml', (req, res) => {
-    //retrieve then send back all articles grouped by categories, in an xml format
+app.get('/getAllArticlesByCategory/xml:category', (req, res) => {
+    //retrieve then send back all articles of the specified category in an xml format
 });
 
-app.get('/getAllArticlesGroupedByCategories/json', (req, res) => {
-    //retrieve then send back all articles grouped by categories, in an json format
+app.get('/getAllArticlesByCategory/json:category', (req, res) => {
+    //retrieve then send back all articles of the specified category in a json format
+});
+
+app.get('/getAllArticlesGroupedByCategory/xml', (req, res) => {
+    //retrieve then send back all articles grouped by category, in an xml format
+});
+
+app.get('/getAllArticlesGroupedByCategory/json', (req, res) => {
+    //retrieve then send back all articles grouped by category, in a json format
 });
 
 app.listen(
