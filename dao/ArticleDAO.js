@@ -18,22 +18,44 @@ export class ArticleDAO{
         return con;
     }
 
+    #executeQuery(query){
+        const con = this.#connect();
+
+        return new Promise((resolve) => {
+            con.query(query, (err, result) => {
+                if (err) throw err;
+                resolve(result);
+            });
+        });
+    }
+
+
     /*//object to xml
     static toXML(result){
 
     }*/
 
-    //returns a promise of the result
+    //returns a promise of the result -- which is an array of objects,
+    //each representing an article
     getAllArticles(){
-        const con = this.#connect();
         const sql = "select * from Article";
 
-        return new Promise((resolve) => {
-            con.query(sql, (err, result) => {
-                if (err) throw err;
-                console.log(result);
-                resolve(result);
-            });
-        });
+        return this.#executeQuery(sql);
     }
+
+    getAllArticlesByCategoryId(categoryId){
+        const value = eval(categoryId);
+        const sql = "select * from Article where categoryId = " + mysql.escape(value);
+
+        return this.#executeQuery(sql);
+    }
+
+    getAllArticlesByCategoryName(categoryName){
+        const sql = "select * from Article where categoryId = (" +
+            "select id from Category where label = " + mysql.escape(categoryName) + " limit 1)";
+
+        return this.#executeQuery(sql);
+    }
+
+
 }
