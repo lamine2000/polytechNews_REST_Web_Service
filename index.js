@@ -36,12 +36,34 @@ app.get('/getAllArticles/json', (req, res) => {
         });
 });
 
-app.get('/getAllArticlesByCategory/xml:category', (req, res) => {
+app.get('/getAllArticlesByCategoryId/xml', (req, res) => {
     //retrieve then send back all articles of the specified category in an xml format
 });
 
-app.get('/getAllArticlesByCategory/json:category', (req, res) => {
+app.get('/getAllArticlesByCategoryId/json', (req, res) => {
     //retrieve then send back all articles of the specified category in a json format
+    const dao = new ArticleDAO();
+    const categoryId = req.query.categoryId;
+
+    dao.getAllArticlesByCategoryId(categoryId)
+        .then(result => {
+            res.send({code: 200, 'articles': result});
+        });
+});
+
+app.get('/getAllArticlesByCategoryId/xml', (req, res) => {
+    //retrieve then send back all articles of the specified category in an xml format
+});
+
+app.get('/getAllArticlesByCategoryName/json', (req, res) => {
+    //retrieve then send back all articles of the specified category in a json format
+    const dao = new ArticleDAO();
+    const categoryName = req.query.categoryName;
+
+    dao.getAllArticlesByCategoryName(categoryName)
+        .then(result => {
+            res.send({code: 200, 'articles': result});
+        });
 });
 
 app.get('/getAllArticlesGroupedByCategory/xml', (req, res) => {
