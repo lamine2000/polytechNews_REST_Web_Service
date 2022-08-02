@@ -1,4 +1,5 @@
 import {ArticleDAO} from "./dao/ArticleDAO.js"
+import { json2xml } from "xml-js";
 
 import express from 'express';
 
@@ -13,16 +14,18 @@ app.get('/', (req, res) => {
         .then(result => {
         res.send({code: 200, 'articles': result});
     });
-
-    /*res.send(
-        {
-            result,
-            code: 200
-        });*/
 });
 
 app.get('/getAllArticles/xml', (req, res) => {
     //retrieve then send back all articles in an xml format
+    const dao = new ArticleDAO();
+
+    dao.getAllArticles()
+        .then(result => {
+            res.send({code: 200, 'articles':
+                dao.jsonToXml(result)
+            });
+        });
 });
 
 app.get('/getAllArticles/json', (req, res) => {
@@ -39,6 +42,15 @@ app.get('/getAllArticles/json', (req, res) => {
 
 app.get('/getAllArticlesByCategoryId/xml', (req, res) => {
     //retrieve then send back all articles of the specified category in an xml format
+    const dao = new ArticleDAO();
+    const categoryId = req.query.categoryId;
+
+    dao.getAllArticlesByCategoryId(categoryId)
+        .then(result => {
+            res.send({code: 200, 'articles':
+                    dao.jsonToXml(result)
+            });
+        });
 });
 
 app.get('/getAllArticlesByCategoryId/json', (req, res) => {
@@ -54,8 +66,17 @@ app.get('/getAllArticlesByCategoryId/json', (req, res) => {
 
 
 
-app.get('/getAllArticlesByCategoryId/xml', (req, res) => {
+app.get('/getAllArticlesByCategoryName/xml', (req, res) => {
     //retrieve then send back all articles of the specified category in an xml format
+    const dao = new ArticleDAO();
+    const categoryName = req.query.categoryName;
+
+    dao.getAllArticlesByCategoryName(categoryName)
+        .then(result => {
+            res.send({code: 200, 'articles':
+                    dao.jsonToXml(result)
+            });
+        });
 });
 
 app.get('/getAllArticlesByCategoryName/json', (req, res) => {
@@ -73,6 +94,14 @@ app.get('/getAllArticlesByCategoryName/json', (req, res) => {
 
 app.get('/getAllArticlesGroupedByCategory/xml', (req, res) => {
     //retrieve then send back all articles grouped by category, in an xml format
+    const dao = new ArticleDAO();
+
+    dao.getAllArticlesGroupedByCategory()
+        .then(result => {
+            res.send({code: 200, 'articles':
+                    dao.jsonToXml(result)
+            });
+        });
 });
 
 app.get('/getAllArticlesGroupedByCategory/json', (req, res) => {

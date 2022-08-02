@@ -1,5 +1,6 @@
 import mysql from "mysql";
 import categories from "../constants.js";
+import {json2xml} from "xml-js";
 
 export class ArticleDAO{
 
@@ -29,12 +30,6 @@ export class ArticleDAO{
             });
         });
     }
-
-
-    /*//object to xml
-    static toXML(result){
-
-    }*/
 
     //returns a promise of the result -- which is an array of objects,
     //each representing an article
@@ -76,6 +71,17 @@ export class ArticleDAO{
         return new Promise((resolve) => {
             resolve(result);
         });
+    }
+
+    jsonToXml(json){
+        let xml = json2xml(json, {
+            compact: true
+        });
+
+        xml = xml.replace(/<[0-9]+>/g, '<element>');
+        xml = xml.replace(/<\/[0-9]+>/g, '</element>');
+
+        return '<?xml version="1.0" encoding="UTF-8"?>' + '<result>' +xml + '</result>';
     }
 
 }
