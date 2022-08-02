@@ -61,8 +61,6 @@ export class ArticleDAO{
     async getAllArticlesGroupedByCategory() {
         let result = [];
 
-        //identify if category is an article's name or its id
-
         for (const key in categories) {
             if (categories.hasOwnProperty(key)) {
                     await this.getAllArticlesByCategoryId(eval(key))
