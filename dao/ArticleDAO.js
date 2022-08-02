@@ -1,4 +1,5 @@
 import mysql from "mysql";
+import categories from "../constants.js";
 
 export class ArticleDAO{
 
@@ -57,5 +58,26 @@ export class ArticleDAO{
         return this.#executeQuery(sql);
     }
 
+    async getAllArticlesGroupedByCategory() {
+        let result = [];
+
+        //identify if category is an article's name or its id
+
+        for (const key in categories) {
+            if (categories.hasOwnProperty(key)) {
+                    await this.getAllArticlesByCategoryId(eval(key))
+                        .then(articles => {
+                            const categoryName = categories[key];
+                            const ob = {};
+
+                            ob[`${categoryName}`] = articles;
+                            result.push(ob);
+                        });
+                }
+        }
+        return new Promise((resolve) => {
+            resolve(result);
+        });
+    }
 
 }

@@ -19,7 +19,6 @@ app.get('/', (req, res) => {
             result,
             code: 200
         });*/
-
 });
 
 app.get('/getAllArticles/xml', (req, res) => {
@@ -36,6 +35,8 @@ app.get('/getAllArticles/json', (req, res) => {
         });
 });
 
+
+
 app.get('/getAllArticlesByCategoryId/xml', (req, res) => {
     //retrieve then send back all articles of the specified category in an xml format
 });
@@ -50,6 +51,8 @@ app.get('/getAllArticlesByCategoryId/json', (req, res) => {
             res.send({code: 200, 'articles': result});
         });
 });
+
+
 
 app.get('/getAllArticlesByCategoryId/xml', (req, res) => {
     //retrieve then send back all articles of the specified category in an xml format
@@ -66,15 +69,23 @@ app.get('/getAllArticlesByCategoryName/json', (req, res) => {
         });
 });
 
+
+
 app.get('/getAllArticlesGroupedByCategory/xml', (req, res) => {
     //retrieve then send back all articles grouped by category, in an xml format
 });
 
 app.get('/getAllArticlesGroupedByCategory/json', (req, res) => {
     //retrieve then send back all articles grouped by category, in a json format
+    const dao = new ArticleDAO();
+
+    dao.getAllArticlesGroupedByCategory()
+        .then(result => {
+           res.send({code: 200, 'artcicles': result});
+        });
 });
+
 
 app.listen(
     port,
     () => console.log(`Hello world app listening on port ${port}!`))
-
