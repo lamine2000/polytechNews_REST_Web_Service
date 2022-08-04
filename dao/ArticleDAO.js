@@ -8,7 +8,7 @@ export class ArticleDAO{
         const con = mysql.createConnection({
             host: "localhost",
             user: "mglsi_user",
-            password: "passer",
+            password: "verycomplicatedpassword",
             database: "mglsi_news"
         });
 
