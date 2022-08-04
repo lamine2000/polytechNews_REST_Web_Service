@@ -1,4 +1,4 @@
-import mysql from "mysql";
+import mysql from "mysql2";
 import categories from "../constants.js";
 import {json2xml} from "xml-js";
 
